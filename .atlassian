@@ -2,10 +2,10 @@
 # Uncomment one section below to configure credentials for accessing Confluence
 
 # Uncomment this section for Confluence Cloud
-url = https://<replace with URL of your Confluence Cloud server>
-username = <replace with username>
-api_token = <replace with api_token>
-cloud = True
+#url = https://<replace with URL of your Confluence Cloud server>
+#username = <replace with username>
+#api_token = <replace with api_token>
+#cloud = True
 
 # Uncomment this section for Confluence Server with PAT
 #url = <replace with your Confluence Server URL>
