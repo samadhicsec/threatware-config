@@ -14,7 +14,7 @@ tag-mapping:
       - unique/technical-asset-data/type                              # value must be unique when compared to the data tagged 'type' in table tagged 'technical-asset-data'
       - validate-as-single-entry                                      # value must not contain a newline (runs the 'validate-as-single-entry' validator on the value, see validators/validators_config.yaml)
 
-  - key-name: type
+  - key-name: category
     tags:
       - type                                                          # tag all data with key-name 'type' with tag value 'type'
       - unique/functional-asset-data/type/value_not_table             # value must be unique (compared to values not in the same table) when compared to the data tagged 'type' in table tagged 'functional-asset-data'
