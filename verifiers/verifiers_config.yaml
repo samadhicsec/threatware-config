@@ -114,7 +114,7 @@ verifiers-config:
             config:
               method: "isempty"
         issue-text-key: "conditional-is-empty"
-      # If 'Authentication' is not 'n/a' then 'Authorisation' must also NOT be 'n/a' i.e. if there is authn there is always authz, although maybe 'None'
+      # If 'Authentication' is 'n/a' then 'Authorisation' must also be 'n/a' i.e. if authn is not possible, then authz is not possible.  Usually authors mean authn is 'None' i.e. there is no authn
       - if:                                            
           value-tag: "authentication"
           value-condition:
@@ -131,7 +131,7 @@ verifiers-config:
               expected-result: {{ translate.na | safe }}
         issue-text-key: "conditional-authnz-na"
         fix-text-key: "conditional-authnz-na-fix"
-      # If 'Authorisation' IS NOT 'n/a' then 'Authentication' must also NOT be 'n/a' i.e. if there is authz, then there is authn, although maybe 'None'
+      # If 'Authorisation' is 'n/a' then 'Authentication' must also be 'n/a' i.e. if authz is not possible, then authn is not possible.  Uusally authors mean authz is 'None' i.e. there is no authz
       - if:                                             
           value-tag: "authorisation"
           value-condition:
