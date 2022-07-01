@@ -6,7 +6,6 @@ tag-mapping:
     tags:
       - name                                                          # tag all data with key-name 'name' with tag value 'name'
       - row-identifier                                                # error message will use the column with this tag to identifer the row where the error occurred
-      - document-unique                                               # a document unique value when compared to all other keys tagged 'document-unique'
       - unique/components-details-data/name                           # value must be unique when compared to the data tagged 'name' in table tagged 'components-details-data'
       - unique/functional-asset-data/name                             # value must be unique when compared to the data tagged 'name' in table tagged 'functional-asset-data'
       - unique/functional-asset-data/type                             # value must be unique when compared to the data tagged 'type' in table tagged 'functional-asset-data'
@@ -82,8 +81,10 @@ tag-mapping:
 
   - key-name: "version"
     tags:
-      - validate-as-version       # value must have 'version' format e.g. 1.0, 2.1 (runs the 'validate-as-version' validator on the value, see validators/validators_config.yaml)
-      - validate-as-single-entry  # value must not contain a newline (runs the 'validate-as-single-entry' validator on the value, see validators/validators_config.yaml)
+      - version                               # tag all data with key-name 'version' with tag value 'version'
+      - validate-as-version                   # value must have 'version' format e.g. 1.0, 2.1 (runs the 'validate-as-version' validator on the value, see validators/validators_config.yaml)
+      - validate-as-single-entry              # value must not contain a newline (runs the 'validate-as-single-entry' validator on the value, see validators/validators_config.yaml)
+      - unique/version-history-data/version   # value must be unique when compared to the data tagged 'version' in table tagged 'version-history-data'
 
   - key-name: "version-date"
     tags: 

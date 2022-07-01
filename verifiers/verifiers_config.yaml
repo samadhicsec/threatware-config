@@ -42,14 +42,112 @@ verifiers-config:
   field-validation-conditional-mandatory:             # verifier for a value must exist if another value has a certain value
     tags:
     # The following pairs of tag define a tag that is mandatory if another tag has a value
-      - tag: "tech-stack"                             # in any given row, the value tagged 'tech-stack' is mandatory if
-        depends-on: "in-scope"                        # the value tagged 'in-scope'
-        depends-on-value: {{ translate.yes }}         # has this value
-      - tag: "version-approver"
-        depends-on: "version-status"
-        depends-on-value: {{ translate.approved }}
-      - tag: "version-approved-date"                  # in any given row, the value tagged 'version-approved-date' is mandatory if
-        depends-on: "version-approver"                # the value tagged 'version-approver' has ANY value
+      #- tag: "tech-stack"                             # in any given row, the value tagged 'tech-stack' is mandatory if
+      #  depends-on: "in-scope"                        # the value tagged 'in-scope'
+      #  depends-on-value: {{ translate.yes }}         # has this value
+      #- tag: "version-approver"
+      #  depends-on: "version-status"
+      #  depends-on-value: {{ translate.approved }}
+      #- tag: "version-approved-date"                  # in any given row, the value tagged 'version-approved-date' is mandatory if
+      #  depends-on: "version-approver"                # the value tagged 'version-approver' has ANY value
+      #- tag: "version-approver"                       # in any given row, the value tagged 'version-approver' is mandatory if
+      #  depends-on: "version-approved-date"           # the value tagged 'version-approved-date' has ANY value
+
+  field-validation-conditional:                      # verifier for a value with a condition if another value has a certain value
+    conditionals:
+    # The following are conditional 'if ... then ...' statements where if the 'if' condition is True and the 'then' condition is false, an issue is raised
+      # If 'In Scope' is 'Yes' then 'Tech Stack' must not be empty
+      - if:
+          value-tag: "in-scope"
+          value-condition:
+            validator: "string"
+            config:
+              method: "equals"
+              expected-result: {{ translate.yes }}
+        then:
+          value-tag: "tech-stack"
+          value-condition:
+            validator: "string"
+            config:
+              method: "isnotempty"
+        issue-text-key: conditional-mandatory
+      # If 'Status' is 'Approved' then 'Approver Name' must not be empty
+      - if:
+          value-tag: "version-status"
+          value-condition:
+            validator: "string"
+            config:
+              method: "equals"
+              expected-result: {{ translate.approved }}
+        then:
+          value-tag: "version-approver"
+          value-condition:
+            validator: "string"
+            config:
+              method: "isnotempty"
+        issue-text-key: "conditional-mandatory"
+      # If 'Approver Name' is not empty then 'Approved Date' must also be not empty
+      - if:
+          value-tag: "version-approver"
+          value-condition:
+            validator: "string"
+            config:
+              method: "isnotempty"
+        then:
+          value-tag: "version-approved-date"
+          value-condition:
+            validator: "string"
+            config:
+              method: "isnotempty"
+        issue-text-key: "conditional-mandatory-any-value"
+      # If 'Approver Name' is empty then 'Approved Date' must also be empty
+      - if:
+          value-tag: "version-approver"
+          value-condition:
+            validator: "string"
+            config:
+              method: "isempty"
+        then:
+          value-tag: "version-approved-date"
+          value-condition:
+            validator: "string"
+            config:
+              method: "isempty"
+        issue-text-key: "conditional-is-empty"
+      # If 'Authentication' is not 'n/a' then 'Authorisation' must also NOT be 'n/a' i.e. if there is authn there is always authz, although maybe 'None'
+      - if:                                            
+          value-tag: "authentication"
+          value-condition:
+            validator: "string"
+            config:
+              method: "equals"
+              expected-result: {{ translate.na | safe }}
+        then:
+          value-tag: "authorisation"
+          value-condition:
+            validator: "string"
+            config:
+              method: "equals"
+              expected-result: {{ translate.na | safe }}
+        issue-text-key: "conditional-authnz-na"
+        fix-text-key: "conditional-authnz-na-fix"
+      # If 'Authorisation' IS NOT 'n/a' then 'Authentication' must also NOT be 'n/a' i.e. if there is authz, then there is authn, although maybe 'None'
+      - if:                                             
+          value-tag: "authorisation"
+          value-condition:
+            validator: "string"
+            config:
+              method: "equals"
+              expected-result: {{ translate.na | safe }}
+        then:
+          value-tag: "authentication"
+          value-condition:
+            validator: "string"
+            config:
+              method: "equals"
+              expected-result: {{ translate.na | safe }}
+        issue-text-key: "conditional-authnz-na"
+        fix-text-key: "conditional-authnz-na-fix"
   
   field-validation-uniqueness:                        # verifier to check if a value is unique, according the criteria in it's tag
     unique-tag-prefix: "unique"                       # how to identity tags containing uniqueness criteria
