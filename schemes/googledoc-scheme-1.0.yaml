@@ -203,7 +203,7 @@ scheme:
                 get-data:
                   - query:
                       type: html-table-row
-                      column-num: 1
+                      column-num: 3
                   - query:
                       type: text-split
                       split-by:
@@ -243,9 +243,15 @@ scheme:
             - key: "URL"
               value:
                 get-data:
-                  query:
-                    type: html-text
-                    xpath: ".//a/@href"
+                  - query:
+                      type: html-text
+                      xpath: ".//a/@href"
+                  # href in a google doc gets converted to a Google link, so we remove that
+                  - query:
+                      type: value-extract
+                      regex: "^https\\:\\/\\/www\\.google\\.com\\/url\\?q\\=([^&]*)&.*$"
+                  - query:
+                      type: value-urldecode
       - key: components
         value:
           map-data:
