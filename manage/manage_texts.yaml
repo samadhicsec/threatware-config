@@ -9,7 +9,7 @@ output-texts:
     success-submitter: "The following metadata for threat model with ID '{{ ID }}' was submitted, please let an approver know"
     empty-id: "The threat model at this location has an empty ID.  Please populate the ID field and re-submit"
     no-ID-in-metadata: "No ID was found in the metadata for a threat model with location '{{ location }}'.  Please ensure you invoke 'create' on your threat model before you submit it, and the 'create' is approved"
-    model-and-metadata-ID-mismatch: "The ID value in the threat model does not match the ID value in the metadata for the registered scheme and location"
+    model-and-metadata-ID-mismatch: "The ID value in the threat model ('{{ current_ID }}') does not match the ID value in the metadata ('{{ metadata_ID }}') for the registered scheme and location"
     no-version-history: "Could not find entry in version history table for threat model current version '{{ current_version }}'"
     no-index-ID: "Could not find metadata index entry for ID '{{ ID }}'.  Valid IDs must exist in the metadata index file.  New IDs can be created using manage.create"
     index-entry-exists: "Cannot create ID for threat model with location '{{ location }}' as that location is used by threat model with ID '{{ ID }}'"
