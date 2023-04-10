@@ -71,6 +71,27 @@ verifiers-config:
             config:
               method: "isnotempty"
         issue-text-key: conditional-mandatory
+      # If 'In Scope' is 'Yes' then 'Component' name must exist in the 'AuthN/Z' table
+      - if:
+          value-tag: "in-scope"
+          value-condition:
+            validator: "string"
+            config:
+              method: "equals"
+              expected-result: {{ translate.yes }}
+        then:
+          value-tag: "name"
+          value-condition:
+            validator: "exists"
+            config:
+              template: false
+              data-tag: "components-access-control-data"
+              value-tag: "threat-component"
+        issue-text-key: conditional-mandatory-exists
+        fix-text-key: conditional-mandatory-exists-fix
+        issue-table-tag: "components-access-control-data"       # When there's an error, use the table with this tag
+        issue-table-row:                                        # When there's an error, leaving this blank means no (row) location is shown
+        issue-key-tag: "threat-component"                       # When there's an error, the 'issue_key' used in templates has this tag
       # If 'Status' is 'Approved' then 'Approver Name' must not be empty
       - if:
           value-tag: "version-status"
