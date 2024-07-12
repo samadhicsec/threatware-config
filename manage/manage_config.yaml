@@ -3,7 +3,7 @@ manage-config:
   storage:
     gitrepo:
       # The git remote value of the repo to interact with e.g. "git@github.com:samadhicsec/threat-models.git"
-      remote: 
+      remote: file:///home/threatuser/threatmodels
       # The branch containing approved versions of data.  threatware will use this value to ensure it never commits directly to this branch.
       default-branch: "approved"
       # The local base directory to clone the git remote repo into
