@@ -1,5 +1,8 @@
 ---
 providers:
+  api:
+    google:
+      api_key: "AIzaSyC8Yaya4yClX85W7yPHzIGkLtUkX-ugF1M"
   cli:
     confluence:
       creds_config_file: ".atlassian"       # The location of the file containing the credentials for Confluence.  Location can be relative to the root config directory.
