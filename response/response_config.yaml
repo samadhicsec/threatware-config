@@ -169,7 +169,7 @@ response-config:
             #tippytip :is(table, th, td) {
               border: 1px solid black;
               border-collapse: collapse;
-              padding: 3px;
+              padding: 8px;
             }
           script: |
             function formatfinding(finding) {
@@ -206,6 +206,7 @@ response-config:
               maxWidth: 650,
               content: (reference) => setContent(reference),
               allowHTML: true,
+              interactive: true,
             });
 
             function tippySelector() {
